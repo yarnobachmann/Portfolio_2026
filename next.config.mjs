@@ -4,6 +4,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 const nextConfig = {
   images: {
     remotePatterns: [],
+    qualities: [75, 90],
   },
 }
 
