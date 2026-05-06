@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import GalleryPage from '@/components/GalleryPage'
 import { getGallery } from '@/lib/cms/gallery'
 import { getGallerySettings } from '@/lib/cms/gallery-settings'

@@ -1,13 +1,8 @@
+export const dynamic = 'force-dynamic'
+
 import { notFound } from 'next/navigation'
 import ProjectDetailWrapper from '@/components/ProjectDetailWrapper'
-import { getProjectBySlug, getProjectSlugs } from '@/lib/cms/projects'
-
-export const dynamicParams = true
-
-export async function generateStaticParams() {
-  const slugs = await getProjectSlugs()
-  return slugs.map((slug) => ({ slug }))
-}
+import { getProjectBySlug } from '@/lib/cms/projects'
 
 export default async function ProjectPage({
   params,

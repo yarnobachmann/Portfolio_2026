@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import HomePageWrapper from '@/components/HomePageWrapper'
 import { getHomepage } from '@/lib/cms/homepage'
 import { getFeaturedProjects } from '@/lib/cms/projects'
