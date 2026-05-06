@@ -10,11 +10,8 @@ out/
 .env.local
 .env.*.local
 
-# Payload CMS — generated file and SQLite database
+# Payload CMS — generated types file
 payload-types.ts
-payload.db
-payload.db-shm
-payload.db-wal
 
 # OS / editor
 .DS_Store
