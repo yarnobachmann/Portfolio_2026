@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import ProjectsPage from '@/components/ProjectsPage'
 import { getProjects } from '@/lib/cms/projects'
 import { getProjectsSettings } from '@/lib/cms/projects-settings'

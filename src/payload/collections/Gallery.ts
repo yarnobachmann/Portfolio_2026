@@ -11,7 +11,7 @@ export const Gallery: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'filter', '_status'],
+    defaultColumns: ['title', 'filter', 'featured', 'order', '_status'],
   },
   versions: {
     drafts: true,
@@ -44,13 +44,18 @@ export const Gallery: CollectionConfig = {
       type: 'checkbox',
       defaultValue: false,
       admin: {
-        description: 'Show on homepage',
+        description: 'Show this photo in the homepage featured section',
+        position: 'sidebar',
       },
     },
     {
       name: 'order',
       type: 'number',
       defaultValue: 0,
+      admin: {
+        description: 'Display order (lower = first)',
+        position: 'sidebar',
+      },
     },
   ],
 }
