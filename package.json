@@ -1,0 +1,37 @@
+{
+  "name": "yarno-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node seed-runner.cjs",
+    "generate:importmap": "node generate-importmap.cjs",
+    "payload": "payload"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.1",
+    "@payloadcms/db-sqlite": "^3.84.1",
+    "@payloadcms/live-preview-react": "^3.84.1",
+    "@payloadcms/next": "^3.84.1",
+    "@payloadcms/richtext-lexical": "^3.84.1",
+    "@payloadcms/ui": "^3.84.1",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.414.0",
+    "next": "^16.2.4",
+    "payload": "^3.84.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "sharp": "^0.34.5",
+    "three": "^0.184.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5"
+  }
+}
