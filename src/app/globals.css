@@ -1,0 +1,113 @@
+@font-face {
+  font-family: 'Prototype';
+  src: url('/fonts/Prototype.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #0e0d0c;
+  color: #faf9f6;
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0e0d0c; }
+::-webkit-scrollbar-thumb { background: #2a2928; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #353534; }
+
+input, textarea, button, select {
+  font-family: 'DM Sans', sans-serif;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #353534;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* GSAP animation helpers */
+.hero-line {
+  display: block;
+  will-change: transform;
+}
+
+.scroll-line {
+  will-change: transform;
+  transform-origin: top center;
+}
+
+/* Page fade-in */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero particle float — muted text */
+@keyframes hpFloat {
+  0%, 100% { transform: translateY(0px); opacity: 0.16; }
+  50%       { transform: translateY(-7px); opacity: 0.44; }
+}
+/* Hero particle float — accent (pink-red) text, slightly brighter */
+@keyframes hpFloatAccent {
+  0%, 100% { transform: translateY(0px); opacity: 0.25; }
+  50%       { transform: translateY(-6px); opacity: 0.7; }
+}
+
+/* ── Hero ink-blob background ────────────────────────────────────────────── */
+
+/* Slow positional drift — each blob gets a different one */
+@keyframes blobDrift1 {
+  0%, 100% { transform: translate(0%,   0%); }
+  33%       { transform: translate(5%,  -8%); }
+  66%       { transform: translate(-4%,  5%); }
+}
+@keyframes blobDrift2 {
+  0%, 100% { transform: translate(0%,   0%); }
+  40%       { transform: translate(-7%,  7%); }
+  70%       { transform: translate(5%,  -4%); }
+}
+@keyframes blobDrift3 {
+  0%, 100% { transform: translate(0%,  0%); }
+  50%       { transform: translate(4%,  8%); }
+}
+
+/* Organic shape morphing — ink-blob silhouette changes */
+@keyframes blobMorph1 {
+  0%, 100% { border-radius: 62% 38% 44% 56% / 58% 44% 56% 42%; }
+  33%       { border-radius: 42% 58% 60% 40% / 48% 52% 48% 52%; }
+  66%       { border-radius: 55% 45% 38% 62% / 62% 38% 64% 36%; }
+}
+@keyframes blobMorph2 {
+  0%, 100% { border-radius: 52% 48% 58% 42% / 54% 46% 54% 46%; }
+  40%       { border-radius: 64% 36% 46% 54% / 42% 58% 42% 58%; }
+  80%       { border-radius: 40% 60% 52% 48% / 60% 40% 60% 40%; }
+}
+
+/* Responsive grids */
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+@media (max-width: 1023px) { .grid-3 { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 639px)  { .grid-3 { grid-template-columns: 1fr; } .grid-2 { grid-template-columns: 1fr; } }
