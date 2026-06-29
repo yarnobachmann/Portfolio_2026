@@ -1,6 +1,12 @@
 import { getPayload } from '../payload'
 
-export type CMSService = { title: string; description?: string }
+export type CMSService = {
+  title: string
+  description?: string
+  linkUrl?: string
+  linkLabel?: string
+  openInNewTab?: boolean
+}
 export type CMSStat = { value: number; suffix?: string; label: string }
 
 export type CMSHomepage = {
@@ -10,6 +16,19 @@ export type CMSHomepage = {
   heroLine2: string
   heroSubtitle: string
   heroBody: string
+  heroShowParticles?: boolean
+  heroSidePanelEnabled?: boolean
+  heroSidePanelEyebrow?: string
+  heroSidePanelTitle?: string
+  heroSidePanelText?: string
+  heroBottomLeft?: string
+  heroBottomRight?: string
+  heroPrimaryLabel?: string
+  heroPrimaryHref?: string
+  heroSecondaryLabel?: string
+  heroSecondaryHref?: string
+  servicesEyebrow?: string
+  servicesTitle?: string
   services: CMSService[]
   stats: CMSStat[]
   aboutTitle: string
@@ -18,10 +37,23 @@ export type CMSHomepage = {
 
 const defaults: CMSHomepage = {
   heroEyebrow: 'Available for work',
-  heroLine1: 'Yarno',
-  heroLine2: 'Bachmann',
+  heroLine1: 'photographer',
+  heroLine2: '& developer.',
   heroSubtitle: 'Photographer & Developer',
   heroBody: 'Based in the Netherlands — creating visual work and building digital products.',
+  heroShowParticles: true,
+  heroSidePanelEnabled: true,
+  heroSidePanelEyebrow: 'Available now',
+  heroSidePanelTitle: 'NL',
+  heroSidePanelText: 'Based in the Netherlands',
+  heroBottomLeft: 'Photographer & Developer',
+  heroBottomRight: 'Scroll to explore',
+  heroPrimaryLabel: 'View gallery',
+  heroPrimaryHref: '/gallery',
+  heroSecondaryLabel: 'Get in touch',
+  heroSecondaryHref: '/contact',
+  servicesEyebrow: 'What I do',
+  servicesTitle: 'This is what I do',
   services: [
     { title: 'Photography', description: 'Commercial, portrait and documentary' },
     { title: 'Web Development', description: 'Full-stack applications and websites' },

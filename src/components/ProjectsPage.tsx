@@ -9,6 +9,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowUpRight, ArrowRight } from 'lucide-react'
 import type { CMSProject } from '@/lib/cms/projects'
+import type { CMSProjectsSettings } from '@/lib/cms/projects-settings'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -26,21 +27,21 @@ function ProjectCard({ title, desc, tag, year, tech, accent, slug }: CMSProject)
   const router = useRouter()
   return (
     <div
-      className="project-card"
+      className="project-card interactive-card tilt-lift"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={() => router.push(`/projects/${slug}`)}
       style={{
         borderRadius: '12px', padding: '28px 28px 24px',
         background: hovered
-          ? (accent ? 'rgba(109,39,53,0.13)' : 'rgba(255,255,255,0.05)')
-          : (accent ? 'rgba(109,39,53,0.07)' : 'rgba(255,255,255,0.025)'),
+          ? (accent ? 'linear-gradient(135deg, rgba(255,95,126,0.2), rgba(255,179,92,0.12))' : 'linear-gradient(135deg, rgba(255,255,255,0.105), rgba(79,209,197,0.07))')
+          : (accent ? 'rgba(255,95,126,0.105)' : 'rgba(255,255,255,0.055)'),
         border: `1px solid ${accent
-          ? (hovered ? 'rgba(138,63,78,0.58)' : 'rgba(138,63,78,0.3)')
-          : (hovered ? 'rgba(226,226,226,0.22)' : 'rgba(226,226,226,0.1)')}`,
+          ? (hovered ? 'rgba(255,95,126,0.58)' : 'rgba(255,95,126,0.28)')
+          : (hovered ? 'rgba(255,255,255,0.24)' : 'rgba(226,226,226,0.1)')}`,
         cursor: 'pointer',
-        transition: 'background 0.22s ease, border-color 0.22s ease, transform 0.22s ease',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transition: 'background 0.22s ease, border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease',
+        transform: hovered ? 'translateY(-7px) rotateX(1.5deg)' : 'translateY(0)',
         display: 'flex', flexDirection: 'column',
         willChange: 'transform',
       }}
@@ -48,30 +49,28 @@ function ProjectCard({ title, desc, tag, year, tech, accent, slug }: CMSProject)
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
         <span style={{
           fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase',
-          background: accent ? 'rgba(109,39,53,0.22)' : 'rgba(255,255,255,0.07)',
-          color: accent ? '#c96a78' : '#868584',
-          border: `1px solid ${accent ? 'rgba(138,63,78,0.42)' : 'rgba(226,226,226,0.14)'}`,
+          background: accent ? 'rgba(255,95,126,0.18)' : 'rgba(255,255,255,0.07)',
+          color: accent ? '#ffb35c' : '#aaa7a3',
+          border: `1px solid ${accent ? 'rgba(255,95,126,0.42)' : 'rgba(226,226,226,0.14)'}`,
           borderRadius: '4px', padding: '3px 8px',
           fontFamily: 'DM Sans, sans-serif',
         }}>
           {tag}
         </span>
-        <span style={{ fontSize: '11px', color: '#454545', fontFamily: 'DM Sans, sans-serif' }}>{year}</span>
+        <span style={{ fontSize: '11px', color: '#7c7771', fontFamily: 'DM Sans, sans-serif' }}>{year}</span>
       </div>
 
       <div style={{ fontSize: '20px', fontWeight: 500, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.3px', lineHeight: 1.2, marginBottom: '10px' }}>
         {title}
       </div>
-      <div style={{ fontSize: '14px', color: '#868584', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', marginBottom: '20px', flex: 1 }}>
+      <div style={{ fontSize: '14px', color: '#aaa7a3', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', marginBottom: '20px', flex: 1 }}>
         {desc}
       </div>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '20px' }}>
         {tech?.map((t, i) => (
-          <span key={i} style={{
-            fontSize: '11px', color: '#868584',
-            background: 'rgba(255,255,255,0.05)',
-            border: '1px solid rgba(226,226,226,0.1)',
+          <span key={i} className="accent-chip" style={{
+            fontSize: '11px', color: '#aaa7a3',
             borderRadius: '4px', padding: '3px 8px',
             fontFamily: 'Geist Mono, monospace', letterSpacing: '-0.2px',
           }}>{t.label}</span>
@@ -79,22 +78,22 @@ function ProjectCard({ title, desc, tag, year, tech, accent, slug }: CMSProject)
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid rgba(226,226,226,0.07)', paddingTop: '16px' }}>
-        <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', color: accent ? '#c96a78' : '#454545', fontFamily: 'DM Sans, sans-serif', transition: 'color 0.15s ease' }}>
+        <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', color: hovered ? '#faf9f6' : (accent ? '#ff5f7e' : '#7c7771'), fontFamily: 'DM Sans, sans-serif', transition: 'color 0.15s ease' }}>
           View project
-          <ArrowUpRight size={14} strokeWidth={1.5} style={{ color: accent ? '#c96a78' : '#454545' }} />
+          <ArrowUpRight size={14} strokeWidth={1.5} style={{ color: hovered ? '#ffb35c' : (accent ? '#ff5f7e' : '#7c7771') }} />
         </span>
       </div>
     </div>
   )
 }
 
-export default function ProjectsPage({ projects: cmsProjets, heroImage }: { projects?: CMSProject[]; heroImage?: string | null }) {
+export default function ProjectsPage({ projects: cmsProjets, settings }: { projects?: CMSProject[]; settings?: CMSProjectsSettings }) {
   const [activeTab, setActiveTab] = useState('All')
   const router = useRouter()
   const containerRef = useRef<HTMLDivElement>(null)
   const { isMobile, px } = useBreakpoint()
   const tabs = ['All', 'Development', 'Photography', 'Design']
-  const heroBg = heroImage || '/uploads/projecthero.png'
+  const heroBg = settings?.heroImage || '/uploads/projecthero.png'
 
   const projects = cmsProjets && cmsProjets.length > 0 ? cmsProjets : FALLBACK_PROJECTS
   const filtered = activeTab === 'All' ? projects : projects.filter(p => p.tag === activeTab)
@@ -123,28 +122,28 @@ export default function ProjectsPage({ projects: cmsProjets, heroImage }: { proj
       {/* Hero header */}
       <div style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(226,226,226,0.08)', minHeight: '340px', display: 'flex', alignItems: 'flex-end' }}>
         <Image src={heroBg} alt="" fill priority style={{ objectFit: 'cover', objectPosition: 'center 40%' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(14,13,12,0.45) 0%, rgba(14,13,12,0.62) 50%, rgba(14,13,12,0.93) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(109,39,53,0.11)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(18,15,13,0.26) 0%, rgba(18,15,13,0.42) 50%, rgba(23,20,18,0.78) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,95,126,0.15), rgba(79,209,197,0.08), rgba(255,179,92,0.08))' }} />
         <div style={{ position: 'relative', zIndex: 1, padding: `80px ${px} 52px`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '40px', width: '100%' }}>
           <div>
             <div className="proj-eyebrow" style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span style={{ width: '32px', height: '1px', background: '#c96a78', display: 'inline-block' }} />
-              My work
+              {settings?.heroEyebrow || 'My work'}
             </div>
             <h1 className="proj-heading" style={{ fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-2px', lineHeight: 1.0, marginBottom: '20px' }}>
-              Projects
+              {settings?.heroTitle || 'Projects'}
             </h1>
-            <p className="proj-sub" style={{ fontSize: '17px', color: '#afaeac', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '460px' }}>
-              Development work, photography projects and design explorations.
+            <p className="proj-sub" style={{ fontSize: '17px', color: '#d0cbc5', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '460px' }}>
+              {settings?.heroSubtitle || 'Development work, photography projects and design explorations.'}
             </p>
           </div>
           {!isMobile && (
-            <div className="proj-stat-box" style={{ flexShrink: 0, background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(226,226,226,0.14)', borderRadius: '12px', padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '160px' }}>
+            <div className="proj-stat-box" style={{ flexShrink: 0, background: 'rgba(255,255,255,0.105)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(226,226,226,0.2)', borderRadius: '12px', padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '160px' }}>
               <span style={{ fontSize: '36px', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-1.5px', lineHeight: 1 }}>
                 {projects.length}
               </span>
               <span style={{ fontSize: '11px', color: '#afaeac', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>
-                Total projects
+                {settings?.statLabel || 'Total projects'}
               </span>
             </div>
           )}
@@ -158,14 +157,14 @@ export default function ProjectsPage({ projects: cmsProjets, heroImage }: { proj
             key={t}
             className="proj-tab-btn"
             onClick={() => setActiveTab(t)}
-            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: activeTab === t ? 500 : 400, borderRadius: '50px', padding: '7px 18px', cursor: 'pointer', background: activeTab === t ? '#6d2735' : 'rgba(255,255,255,0.05)', color: activeTab === t ? '#faf9f6' : '#868584', border: activeTab === t ? 'none' : '1px solid rgba(226,226,226,0.12)', transition: 'all 0.2s ease' }}
+            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: activeTab === t ? 500 : 400, borderRadius: '50px', padding: '7px 18px', cursor: 'pointer', background: activeTab === t ? 'linear-gradient(135deg, #ff5f7e, #7c2941)' : 'rgba(255,255,255,0.075)', color: activeTab === t ? '#faf9f6' : '#aaa7a3', border: activeTab === t ? 'none' : '1px solid rgba(226,226,226,0.16)', transition: 'all 0.2s ease', boxShadow: activeTab === t ? 'rgba(255,95,126,0.24) 0 10px 28px' : 'none' }}
             onMouseEnter={e => { if (activeTab !== t) e.currentTarget.style.color = '#afaeac' }}
-            onMouseLeave={e => { if (activeTab !== t) e.currentTarget.style.color = '#868584' }}
+            onMouseLeave={e => { if (activeTab !== t) e.currentTarget.style.color = '#aaa7a3' }}
           >
             {t}
           </button>
         ))}
-        <span style={{ fontSize: '12px', color: '#454545', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif', marginLeft: 'auto' }}>
+        <span style={{ fontSize: '12px', color: '#7c7771', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif', marginLeft: 'auto' }}>
           {filtered.length} {filtered.length === 1 ? 'project' : 'projects'}
         </span>
       </div>
@@ -178,20 +177,21 @@ export default function ProjectsPage({ projects: cmsProjets, heroImage }: { proj
       </div>
 
       {/* CTA */}
-      <div className="proj-cta" style={{ margin: '0 72px 80px', borderTop: '1px solid rgba(226,226,226,0.08)', paddingTop: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div className="proj-cta interactive-card" style={{ margin: '0 72px 80px', borderTop: '1px solid rgba(226,226,226,0.08)', paddingTop: '60px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <div style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '10px' }}>Collaborate</div>
+          <div style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '10px' }}>{settings?.ctaEyebrow || 'Collaborate'}</div>
           <div style={{ fontSize: '28px', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.5px' }}>
-            Want to work together?
+            {settings?.ctaTitle || 'Want to work together?'}
           </div>
         </div>
         <button
           onClick={() => router.push('/contact')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#353534', color: '#afaeac', border: 'none', borderRadius: '50px', padding: '12px 28px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', transition: 'background 0.18s ease, color 0.18s ease' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#3f3e3d'; e.currentTarget.style.color = '#faf9f6' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#353534'; e.currentTarget.style.color = '#afaeac' }}
+          className="pop-button"
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'linear-gradient(135deg, rgba(255,255,255,0.13), rgba(79,209,197,0.12))', color: '#afaeac', border: '1px solid rgba(255,255,255,0.14)', borderRadius: '50px', padding: '12px 28px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', transition: 'background 0.18s ease, color 0.18s ease' }}
+          onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.color = '#faf9f6' }}
+          onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.color = '#afaeac' }}
         >
-          Get in touch
+          {settings?.ctaButtonLabel || 'Get in touch'}
           <ArrowRight size={15} strokeWidth={1.5} />
         </button>
       </div>

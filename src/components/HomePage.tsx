@@ -21,45 +21,73 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 const SERVICE_ICONS = [Camera, Code2, Aperture, Layers]
 
 const THUMB_GRADIENTS = [
-  'linear-gradient(135deg, #1a1510 0%, #2d2018 50%, #1a1510 100%)',
-  'linear-gradient(135deg, #0e1510 0%, #142010 50%, #0e1510 100%)',
-  'linear-gradient(135deg, #100e14 0%, #1c1520 50%, #100e14 100%)',
+  'radial-gradient(circle at 28% 18%, rgba(255,179,92,0.34), transparent 32%), linear-gradient(135deg, #20140d 0%, #392115 50%, #120f0d 100%)',
+  'radial-gradient(circle at 68% 24%, rgba(79,209,197,0.28), transparent 34%), linear-gradient(135deg, #071612 0%, #112620 50%, #090f0e 100%)',
+  'radial-gradient(circle at 62% 18%, rgba(255,95,126,0.34), transparent 34%), linear-gradient(135deg, #160d16 0%, #271527 50%, #100e14 100%)',
 ]
 
-function ServiceCard({ icon: Icon, title, desc }: {
-  icon: LucideIcon; title: string; desc: string
+function ServiceCard({ icon: Icon, title, desc, linkUrl, linkLabel, openInNewTab }: {
+  icon: LucideIcon; title: string; desc: string; linkUrl?: string; linkLabel?: string; openInNewTab?: boolean
 }) {
   const [hovered, setHovered] = useState(false)
+  const router = useRouter()
+  const clickable = Boolean(linkUrl)
+  const openLink = () => {
+    if (!linkUrl) return
+    if (openInNewTab || /^https?:\/\//.test(linkUrl)) {
+      window.open(linkUrl, openInNewTab ? '_blank' : '_self', 'noopener,noreferrer')
+      return
+    }
+    router.push(linkUrl)
+  }
+
   return (
     <div
-      className="service-card"
+      className="service-card interactive-card tilt-lift"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      onClick={openLink}
+      role={clickable ? 'link' : undefined}
+      tabIndex={clickable ? 0 : undefined}
+      onKeyDown={e => {
+        if (!clickable) return
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          openLink()
+        }
+      }}
       style={{
-        background: hovered ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.025)',
-        border: `1px solid ${hovered ? 'rgba(226,226,226,0.22)' : 'rgba(226,226,226,0.12)'}`,
+        background: hovered ? 'rgba(255,255,255,0.095)' : 'rgba(255,255,255,0.052)',
+        border: `1px solid ${hovered ? 'rgba(255,255,255,0.24)' : 'rgba(226,226,226,0.12)'}`,
         borderRadius: '12px', padding: '28px',
         display: 'flex', flexDirection: 'column', gap: '14px',
         transition: 'background 0.22s ease, border-color 0.22s ease, transform 0.22s ease',
-        transform: hovered ? 'translateY(-3px)' : 'translateY(0)',
+        transform: hovered ? 'translateY(-6px) rotateX(1.5deg)' : 'translateY(0)',
         willChange: 'transform',
+        cursor: clickable ? 'pointer' : 'default',
       }}
     >
       <div style={{
         width: '44px', height: '44px', borderRadius: '8px',
-        background: 'rgba(109,39,53,0.15)',
-        border: '1px solid rgba(138,63,78,0.3)',
+        background: 'linear-gradient(135deg, rgba(255,95,126,0.24), rgba(79,209,197,0.12))',
+        border: '1px solid rgba(255,255,255,0.18)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         flexShrink: 0,
       }}>
-        <Icon size={20} style={{ color: '#c96a78' }} strokeWidth={1.5} />
+        <Icon size={20} style={{ color: hovered ? '#ffb35c' : '#ff5f7e' }} strokeWidth={1.5} />
       </div>
       <div style={{ fontSize: '18px', fontWeight: 500, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.2px' }}>
         {title}
       </div>
-      <div style={{ fontSize: '14px', color: '#868584', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif' }}>
+      <div style={{ fontSize: '14px', color: '#aaa7a3', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif' }}>
         {desc}
       </div>
+      {clickable && (
+        <div style={{ marginTop: 'auto', display: 'inline-flex', alignItems: 'center', gap: '6px', color: hovered ? '#ffb35c' : '#ff5f7e', fontSize: '13px', fontFamily: 'DM Sans, sans-serif', transition: 'color 0.18s ease' }}>
+          {linkLabel || 'View more'}
+          <ArrowUpRight size={14} strokeWidth={1.6} />
+        </div>
+      )}
     </div>
   )
 }
@@ -70,7 +98,7 @@ function ProjectThumb({ label, category, year, gradient, onClick }: {
   const [hovered, setHovered] = useState(false)
   return (
     <div
-      className="project-thumb"
+      className="project-thumb interactive-card tilt-lift"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={onClick}
@@ -78,15 +106,15 @@ function ProjectThumb({ label, category, year, gradient, onClick }: {
         position: 'relative', borderRadius: '10px', overflow: 'hidden',
         aspectRatio: '4/5', cursor: 'pointer',
         background: gradient,
-        border: `1px solid ${hovered ? 'rgba(226,226,226,0.24)' : 'rgba(226,226,226,0.12)'}`,
+        border: `1px solid ${hovered ? 'rgba(255,255,255,0.28)' : 'rgba(226,226,226,0.12)'}`,
         transition: 'transform 0.28s ease, border-color 0.22s ease',
-        transform: hovered ? 'translateY(-5px)' : 'translateY(0)',
+        transform: hovered ? 'translateY(-8px) scale(1.012)' : 'translateY(0)',
         willChange: 'transform',
       }}
     >
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to top, rgba(14,13,12,0.88) 0%, transparent 55%)',
+        background: 'linear-gradient(to top, rgba(18,15,13,0.72) 0%, transparent 58%)',
       }} />
       <div style={{
         position: 'absolute', top: '16px', right: '16px',
@@ -98,13 +126,13 @@ function ProjectThumb({ label, category, year, gradient, onClick }: {
         <ArrowUpRight size={14} style={{ color: '#faf9f6' }} />
       </div>
       <div style={{ position: 'absolute', bottom: '18px', left: '18px', right: '18px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
-        <span style={{ fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif' }}>
+        <span style={{ fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', color: '#ffb35c', fontFamily: 'DM Sans, sans-serif' }}>
           {category}
         </span>
         <span style={{ fontSize: '16px', fontWeight: 500, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.2px' }}>
           {label}
         </span>
-        <span style={{ fontSize: '11px', color: '#868584', fontFamily: 'DM Sans, sans-serif' }}>{year}</span>
+        <span style={{ fontSize: '11px', color: '#aaa7a3', fontFamily: 'DM Sans, sans-serif' }}>{year}</span>
       </div>
     </div>
   )
@@ -272,7 +300,7 @@ function buildParticles(count: number, vw: number, vh: number): ParticleItem[] {
   return result
 }
 
-const PARTICLE_COUNT = 30
+const PARTICLE_COUNT = 24
 
 function HeroParticles() {
   const [items, setItems] = useState<ParticleItem[]>([])
@@ -351,6 +379,19 @@ const defaultHomepage: CMSHomepage = {
   heroLine2: '& developer.',
   heroSubtitle: 'Photographer & Developer',
   heroBody: 'Based in the Netherlands — creating visual work and building digital products.',
+  heroShowParticles: true,
+  heroSidePanelEnabled: true,
+  heroSidePanelEyebrow: 'Available now',
+  heroSidePanelTitle: 'NL',
+  heroSidePanelText: 'Based in the Netherlands',
+  heroBottomLeft: 'Photographer & Developer',
+  heroBottomRight: 'Scroll to explore',
+  heroPrimaryLabel: 'View gallery',
+  heroPrimaryHref: '/gallery',
+  heroSecondaryLabel: 'Get in touch',
+  heroSecondaryHref: '/contact',
+  servicesEyebrow: 'What I do',
+  servicesTitle: 'This is what I do',
   services: [
     { title: 'Photography', description: 'Landscape, portrait and documentary photography. Every frame considered.' },
     { title: 'Web development', description: 'Full-stack web applications built with modern tools. Clean code, excellent UX.' },
@@ -381,6 +422,14 @@ export default function HomePage({
   const containerRef = useRef<HTMLDivElement>(null)
   const statRefs = useRef<(HTMLSpanElement | null)[]>([])
   const heroBg = homepage.heroImage?.url || '/uploads/hero.png'
+  const goTo = (href?: string, newTab = false) => {
+    if (!href) return
+    if (newTab || /^https?:\/\//.test(href)) {
+      window.open(href, newTab ? '_blank' : '_self', 'noopener,noreferrer')
+      return
+    }
+    router.push(href)
+  }
 
   const services = homepage.services?.length ? homepage.services : defaultHomepage.services
   const stats = homepage.stats?.length ? homepage.stats : defaultHomepage.stats
@@ -400,30 +449,57 @@ export default function HomePage({
         { label: 'Terminal UI', category: 'Development', year: '2024', gradient: THUMB_GRADIENTS[2], slug: null },
       ]
 
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduceMotion) return
+
+    const section = containerRef.current?.querySelector<HTMLElement>('.hero-section')
+    const image = containerRef.current?.querySelector<HTMLElement>('.hero-bg-wrap img')
+    if (!section || !image) return
+
+    let current = 0
+    let target = 0
+    let raf = 0
+
+    const setTarget = () => {
+      const rect = section.getBoundingClientRect()
+      const progress = Math.min(1, Math.max(0, -rect.top / Math.max(rect.height, 1)))
+      target = progress * (isMobile ? 34 : 76)
+      if (!raf) raf = requestAnimationFrame(tick)
+    }
+
+    const tick = () => {
+      current += (target - current) * 0.12
+      image.style.transform = `translate3d(0, ${current.toFixed(2)}px, 0) scale(1.08)`
+
+      if (Math.abs(target - current) > 0.08) {
+        raf = requestAnimationFrame(tick)
+      } else {
+        current = target
+        image.style.transform = `translate3d(0, ${current.toFixed(2)}px, 0) scale(1.08)`
+        raf = 0
+      }
+    }
+
+    image.style.willChange = 'transform'
+    image.style.transformOrigin = 'center center'
+    image.style.transform = 'translate3d(0, 0, 0) scale(1.08)'
+
+    setTarget()
+    window.addEventListener('scroll', setTarget, { passive: true })
+    window.addEventListener('resize', setTarget, { passive: true })
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', setTarget)
+      window.removeEventListener('resize', setTarget)
+      image.style.willChange = ''
+      image.style.transformOrigin = ''
+      image.style.transform = ''
+    }
+  }, [isMobile])
+
   useGSAP(() => {
-    const tl = gsap.timeline()
-
-    tl.from('.hero-bg-wrap img', { scale: 1.07, duration: 2.6, ease: 'power2.out' }, 0)
-    tl.from('.hero-accent-wash', { opacity: 0, duration: 1.4 }, 0)
-    tl.from('.eyebrow-line', { scaleX: 0, transformOrigin: 'left center', duration: 0.65, ease: 'power3.out' }, 0.28)
-    tl.from('.eyebrow-text', { x: -18, opacity: 0, duration: 0.55, ease: 'power3.out' }, 0.5)
-    tl.from('.hero-line', { y: '110%', duration: 0.92, stagger: 0.1, ease: 'power4.out' }, 0.42)
-    tl.from('.hero-sub', { y: 22, opacity: 0, duration: 0.72, ease: 'power3.out' }, 1.16)
-    tl.from('.hero-btn', { y: 16, opacity: 0, stagger: 0.12, duration: 0.52, ease: 'power3.out' }, 1.36)
-
-    tl.from('.hero-wolf', { opacity: 0, scale: 1.07, duration: 1.6, ease: 'power2.out' }, 0.78)
-    tl.from('.scroll-indicator', { opacity: 0, duration: 0.6 }, 1.72)
-
-    gsap.to('.scroll-line', {
-      scaleY: 0, transformOrigin: 'top center', ease: 'power2.inOut',
-      duration: 1.2, repeat: -1, repeatDelay: 0.4, delay: 1.95,
-    })
-
-    gsap.to('.hero-bg-wrap img', {
-      yPercent: 18, ease: 'none',
-      scrollTrigger: { trigger: '.hero-section', start: 'top top', end: 'bottom top', scrub: true },
-    })
-
     gsap.from('.stat-item', {
       y: 32, opacity: 0, stagger: 0.1, duration: 0.72, ease: 'power3.out',
       scrollTrigger: { trigger: '.stat-bar', start: 'top 88%' },
@@ -462,72 +538,105 @@ export default function HomePage({
 
       {/* HERO */}
       <section className="hero-section" style={{
-        minHeight: '100vh', position: 'relative', overflow: 'hidden',
-        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-        padding: `0 ${px} 80px`,
+        minHeight: '100svh', position: 'relative', overflow: 'hidden',
+        display: 'flex', alignItems: 'center',
+        padding: isMobile ? `116px ${px} 112px` : `128px ${px} 118px`,
       }}>
-        <div className="hero-bg-wrap" style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden' }}>
-          <Image src={heroBg} alt="" fill priority quality={90} style={{ objectFit: 'cover', objectPosition: 'center 30%' }} />
+        <div className="hero-bg-wrap" style={{ position: 'absolute', inset: '-8% 0', zIndex: 0, overflow: 'hidden', contain: 'paint', transform: 'translateZ(0)' }}>
+          <Image src={heroBg} alt="" fill priority quality={90} style={{ objectFit: 'cover', objectPosition: isMobile ? 'center 24%' : 'center 28%', transform: 'translate3d(0, 0, 0) scale(1.08)', transformOrigin: 'center center' }} />
         </div>
-        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(14,13,12,0.42) 0%, rgba(14,13,12,0.52) 38%, rgba(14,13,12,0.92) 74%, rgba(14,13,12,1) 100%)' }} />
-        <div className="hero-accent-wash" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'rgba(109,39,53,0.13)', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(90deg, rgba(17,14,12,0.86) 0%, rgba(17,14,12,0.52) 43%, rgba(17,14,12,0.18) 72%, rgba(17,14,12,0.62) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(23,20,18,0.08) 0%, rgba(23,20,18,0.18) 48%, rgba(23,20,18,0.84) 100%)' }} />
+        <div className="hero-accent-wash" style={{ position: 'absolute', inset: 0, zIndex: 2, background: 'radial-gradient(circle at 26% 42%, rgba(255,95,126,0.24), transparent 34%), radial-gradient(circle at 78% 28%, rgba(79,209,197,0.16), transparent 28%), linear-gradient(135deg, rgba(255,179,92,0.09), rgba(255,95,126,0.08) 48%, rgba(79,209,197,0.08))', pointerEvents: 'none' }} />
+        <div style={{ position: 'absolute', inset: isMobile ? '18px' : '28px', zIndex: 3, border: '1px solid rgba(255,255,255,0.13)', borderRadius: isMobile ? '20px' : '28px', pointerEvents: 'none', boxShadow: 'inset 0 0 80px rgba(255,255,255,0.035)' }} />
+        <div style={{ position: 'absolute', left: isMobile ? '20px' : px, right: isMobile ? '20px' : px, top: isMobile ? '94px' : '96px', zIndex: 3, height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.38), rgba(255,255,255,0.06), transparent)' }} />
         <HeroCanvas />
-        <div style={{ position: 'relative', zIndex: 4, maxWidth: '800px' }}>
-          <div style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span className="eyebrow-line" style={{ width: '32px', height: '1px', background: '#c96a78', display: 'inline-block', flexShrink: 0 }} />
-            <span className="eyebrow-text">{homepage.heroEyebrow}</span>
+        <div style={{ position: 'relative', zIndex: 4, width: '100%', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) 290px', alignItems: 'center', gap: isMobile ? '34px' : '64px' }}>
+          <div style={{ maxWidth: '1040px', paddingLeft: isMobile ? 0 : 'min(3vw, 44px)' }}>
+            <div style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#ffb35c', fontFamily: 'DM Sans, sans-serif', marginBottom: isMobile ? '22px' : '28px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <span className="eyebrow-line" style={{ width: isMobile ? '30px' : '46px', height: '1px', background: 'linear-gradient(90deg, #ffb35c, #ff5f7e)', display: 'inline-block', flexShrink: 0 }} />
+              <span className="eyebrow-text">{homepage.heroEyebrow}</span>
+            </div>
+
+            <div className="hero-nameplate" style={{ fontSize: isMobile ? '13px' : '14px', color: '#d0cbc5', fontFamily: 'Geist Mono, monospace', marginBottom: '18px', textTransform: 'uppercase', letterSpacing: '2px' }}>
+              Yarno Bachmann
+            </div>
+
+            <h1 style={{ fontSize: 'clamp(54px, 8.6vw, 118px)', fontWeight: 500, color: '#faf9f6', lineHeight: 0.94, letterSpacing: 0, fontFamily: 'DM Sans, sans-serif', marginBottom: isMobile ? '28px' : '34px', maxWidth: '1050px', textWrap: 'balance' }}>
+              <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.08em' }}>
+                <span className="hero-line" style={{ display: 'block' }}>I&apos;m a</span>
+              </span>
+              <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.08em' }}>
+                <span className="hero-line" style={{ display: 'block', textTransform: 'capitalize' }}>{homepage.heroLine1}</span>
+              </span>
+              <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.08em' }}>
+                <span className="hero-line" style={{ display: 'block', color: '#ff5f7e', textShadow: '0 0 42px rgba(255,95,126,0.34)' }}>{homepage.heroLine2}</span>
+              </span>
+            </h1>
+
+            <p className="hero-sub" style={{ fontSize: isMobile ? '17px' : '20px', color: '#ded7cf', lineHeight: 1.7, fontFamily: 'DM Sans, sans-serif', maxWidth: '620px', marginBottom: isMobile ? '34px' : '42px' }}>
+              {homepage.heroBody}
+            </p>
+
+            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '14px' }}>
+              <button
+                className="hero-btn pop-button"
+                onClick={() => goTo(homepage.heroPrimaryHref || '/gallery')}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', color: '#faf9f6', border: '1px solid rgba(255,255,255,0.28)', borderRadius: '50px', padding: '14px 30px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 600, cursor: 'pointer', transition: 'background 0.18s ease, border-color 0.18s ease, transform 0.18s ease', boxShadow: '0 16px 38px rgba(0,0,0,0.24)' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.22)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.44)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.15)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)'; e.currentTarget.style.transform = '' }}
+              >
+                <ImageIcon size={17} strokeWidth={1.7} />
+                {homepage.heroPrimaryLabel || 'View gallery'}
+              </button>
+              <button
+                className="hero-btn pop-button"
+                onClick={() => goTo(homepage.heroSecondaryHref || '/contact')}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: '9px', background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '14px 30px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 600, cursor: 'pointer', transition: 'filter 0.18s ease, transform 0.18s ease', boxShadow: 'rgba(255,95,126,0.34) 0px 16px 40px' }}
+                onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
+              >
+                {homepage.heroSecondaryLabel || 'Get in touch'}
+                <ArrowRight size={17} strokeWidth={1.7} />
+              </button>
+            </div>
           </div>
 
-          <h1 style={{ fontSize: 'clamp(52px, 7vw, 96px)', fontWeight: 400, color: '#faf9f6', lineHeight: 1.0, letterSpacing: '-3px', fontFamily: 'DM Sans, sans-serif', marginBottom: '28px' }}>
-            <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.06em' }}>
-              <span className="hero-line">I&apos;m a</span>
-            </span>
-            <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.06em' }}>
-              <span className="hero-line" style={{ color: '#c96a78' }}>{homepage.heroLine1}</span>
-            </span>
-            <span style={{ display: 'block', overflow: 'hidden', paddingBottom: '0.06em' }}>
-              <span className="hero-line">{homepage.heroLine2}</span>
-            </span>
-          </h1>
-
-          <p className="hero-sub" style={{ fontSize: '18px', color: '#afaeac', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '480px', marginBottom: '40px' }}>
-            {homepage.heroBody}
-          </p>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <button
-              className="hero-btn"
-              onClick={() => router.push('/gallery')}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)', color: '#faf9f6', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50px', padding: '13px 28px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', transition: 'background 0.18s ease, border-color 0.18s ease' }}
-              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.16)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.36)' }}
-              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
-            >
-              <ImageIcon size={16} strokeWidth={1.5} />
-              View gallery
-            </button>
-            <button
-              className="hero-btn"
-              onClick={() => router.push('/contact')}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: '#6d2735', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '13px 28px', fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500, cursor: 'pointer', transition: 'background 0.18s ease', boxShadow: 'rgba(109,39,53,0.32) 0px 8px 28px' }}
-              onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-              onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
-            >
-              Get in touch
-              <ArrowRight size={16} strokeWidth={1.5} />
-            </button>
-          </div>
+          {!isMobile && homepage.heroSidePanelEnabled !== false && (
+            <div className="hero-side-panel interactive-card" style={{ alignSelf: 'end', marginBottom: '18px', borderRadius: '18px', padding: '22px', background: 'linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.055))', border: '1px solid rgba(255,255,255,0.18)', backdropFilter: 'blur(18px)', WebkitBackdropFilter: 'blur(18px)', boxShadow: '0 24px 70px rgba(0,0,0,0.28)' }}>
+              <div style={{ fontSize: '11px', color: '#ffb35c', textTransform: 'uppercase', letterSpacing: '2px', fontFamily: 'DM Sans, sans-serif', marginBottom: '18px' }}>
+                {homepage.heroSidePanelEyebrow || 'Available now'}
+              </div>
+              <div style={{ display: 'grid', gap: '16px' }}>
+                <div>
+                  <div style={{ fontSize: '28px', color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', lineHeight: 1 }}>{homepage.heroSidePanelTitle || 'NL'}</div>
+                  <div style={{ fontSize: '13px', color: '#c8c2bb', fontFamily: 'DM Sans, sans-serif', marginTop: '4px' }}>{homepage.heroSidePanelText || 'Based in the Netherlands'}</div>
+                </div>
+                <div style={{ height: '1px', background: 'rgba(255,255,255,0.14)' }} />
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  {stats.slice(0, 2).map((stat, i) => (
+                    <div key={i} style={{ flex: 1 }}>
+                      <div style={{ fontSize: '24px', color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', lineHeight: 1 }}>{stat.value}{stat.suffix}</div>
+                      <div style={{ fontSize: '11px', color: '#aaa7a3', fontFamily: 'DM Sans, sans-serif', lineHeight: 1.35, marginTop: '5px' }}>{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
-        <HeroParticles />
+        {homepage.heroShowParticles !== false && <HeroParticles />}
 
-        <div className="scroll-indicator" style={{ position: 'absolute', bottom: '36px', right: '72px', zIndex: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '10px', letterSpacing: '2px', textTransform: 'uppercase', color: '#454545', fontFamily: 'DM Sans, sans-serif', writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>Scroll</span>
-          <div className="scroll-line" style={{ width: '1px', height: '48px', background: 'linear-gradient(to bottom, #454545, transparent)' }} />
+        <div className="hero-bottom-strip" style={{ position: 'absolute', left: isMobile ? '20px' : px, right: isMobile ? '20px' : px, bottom: isMobile ? '24px' : '32px', zIndex: 4, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '24px', color: '#c8c2bb', fontFamily: 'DM Sans, sans-serif', fontSize: '12px', textTransform: 'uppercase', letterSpacing: '1.8px' }}>
+          <span>{homepage.heroBottomLeft || homepage.heroSubtitle || 'Photographer & Developer'}</span>
+          {!isMobile && <span>{homepage.heroBottomRight || 'Scroll to explore'}</span>}
+          <div className="scroll-line" style={{ width: isMobile ? '72px' : '140px', height: '1px', background: 'linear-gradient(90deg, rgba(255,255,255,0.34), rgba(255,255,255,0.08))' }} />
         </div>
       </section>
 
       {/* STAT BAR */}
-      <div className="stat-bar" style={{ borderTop: '1px solid rgba(226,226,226,0.08)', borderBottom: '1px solid rgba(226,226,226,0.08)', background: 'rgba(255,255,255,0.018)', padding: `32px ${px}`, display: 'flex', flexWrap: 'wrap' }}>
+      <div className="stat-bar" style={{ borderTop: '1px solid rgba(226,226,226,0.12)', borderBottom: '1px solid rgba(226,226,226,0.12)', background: 'rgba(255,255,255,0.052)', padding: `32px ${px}`, display: 'flex', flexWrap: 'wrap', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}>
         {stats.map((stat, i) => (
           <div key={i} className="stat-item" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px', borderRight: i < stats.length - 1 ? '1px solid rgba(226,226,226,0.08)' : 'none', padding: i === 0 ? '0 40px 0 0' : (i === stats.length - 1 ? '0 0 0 40px' : '0 40px') }}>
             <span
@@ -536,7 +645,7 @@ export default function HomePage({
             >
               {`0${stat.suffix || ''}`}
             </span>
-            <span style={{ fontSize: '12px', color: '#868584', letterSpacing: '1px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>
+            <span style={{ fontSize: '12px', color: '#aaa7a3', letterSpacing: '1px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>
               {stat.label}
             </span>
           </div>
@@ -547,14 +656,22 @@ export default function HomePage({
       <section className="services-section" style={{ padding: `${sectionPy} ${px}`, maxWidth: '1400px', margin: '0 auto' }}>
         <div className="services-eyebrow" style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '12px' }}>
           <span style={{ width: '32px', height: '1px', background: '#c96a78', display: 'inline-block' }} />
-          What I do
+          {homepage.servicesEyebrow || 'What I do'}
         </div>
         <h2 className="services-heading" style={{ fontSize: 'clamp(32px, 3.5vw, 48px)', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.72px', lineHeight: 1.1, marginBottom: '48px' }}>
-          This is what I do
+          {homepage.servicesTitle || 'This is what I do'}
         </h2>
         <div className="services-grid grid-2">
           {services.map((svc, i) => (
-            <ServiceCard key={i} icon={SERVICE_ICONS[i % SERVICE_ICONS.length]} title={svc.title} desc={svc.description || ''} />
+            <ServiceCard
+              key={i}
+              icon={SERVICE_ICONS[i % SERVICE_ICONS.length]}
+              title={svc.title}
+              desc={svc.description || ''}
+              linkUrl={svc.linkUrl}
+              linkLabel={svc.linkLabel}
+              openInNewTab={svc.openInNewTab}
+            />
           ))}
         </div>
       </section>
@@ -636,7 +753,7 @@ export default function HomePage({
                 onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-5px)'; e.currentTarget.style.borderColor = 'rgba(226,226,226,0.22)' }}
                 onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'rgba(226,226,226,0.1)' }}
               >
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(14,13,12,0.82) 0%, transparent 55%)' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(18,15,13,0.66) 0%, transparent 58%)' }} />
                 <div style={{ position: 'absolute', bottom: '16px', left: '16px', right: '16px' }}>
                   <span style={{ fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', display: 'block', marginBottom: '4px' }}>
                     {photo.filter}
@@ -652,7 +769,7 @@ export default function HomePage({
       )}
 
       {/* CTA STRIP */}
-      <div className="cta-strip" style={{ margin: `0 ${px} ${sectionPy}`, background: 'rgba(109,39,53,0.1)', border: '1px solid rgba(138,63,78,0.25)', borderRadius: '16px', padding: isMobile ? '36px 24px' : '56px 64px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? '28px' : '40px' }}>
+      <div className="cta-strip interactive-card" style={{ margin: `0 ${px} ${sectionPy}`, background: 'linear-gradient(135deg, rgba(255,95,126,0.14), rgba(79,209,197,0.08), rgba(255,179,92,0.1))', border: '1px solid rgba(255,255,255,0.16)', borderRadius: '16px', padding: isMobile ? '36px 24px' : '56px 64px', display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'center', gap: isMobile ? '28px' : '40px', overflow: 'hidden' }}>
         <div className="cta-inner-text" style={{ maxWidth: isMobile ? '100%' : '540px' }}>
           <div style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '14px' }}>
             Let&apos;s collaborate
@@ -660,16 +777,16 @@ export default function HomePage({
           <h2 style={{ fontSize: 'clamp(28px, 3vw, 40px)', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.72px', lineHeight: 1.15, marginBottom: '16px' }}>
             Have a project in mind?
           </h2>
-          <p style={{ fontSize: '16px', color: '#868584', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif' }}>
+          <p style={{ fontSize: '16px', color: '#b6b1ab', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif' }}>
             Whether it&apos;s a photo shoot, a web application, or something in between — I&apos;d love to hear about it.
           </p>
         </div>
         <button
           className="cta-inner-btn"
           onClick={() => router.push('/contact')}
-          style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '10px', background: '#6d2735', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '16px 36px', fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 500, cursor: 'pointer', transition: 'background 0.18s ease', boxShadow: 'rgba(109,39,53,0.38) 0px 12px 36px' }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
+          style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: '10px', background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '16px 36px', fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 500, cursor: 'pointer', transition: 'filter 0.18s ease, transform 0.18s ease', boxShadow: 'rgba(255,95,126,0.3) 0px 12px 36px' }}
+          onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+          onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
         >
           Get in touch
           <Send size={16} strokeWidth={1.5} />

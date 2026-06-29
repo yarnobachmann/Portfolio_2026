@@ -75,11 +75,12 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '0 48px', height: '68px',
-          background: scrolled ? 'rgba(14,13,12,0.94)' : 'rgba(14,13,12,0.6)',
+          background: scrolled ? 'rgba(23,20,18,0.88)' : 'rgba(23,20,18,0.46)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          borderBottom: scrolled ? '1px solid rgba(226,226,226,0.1)' : '1px solid transparent',
-          transition: 'background 0.35s ease, border-color 0.35s ease',
+          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.12)' : '1px solid transparent',
+          boxShadow: scrolled ? '0 12px 38px rgba(0,0,0,0.28)' : 'none',
+          transition: 'background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
         }}
       >
         {/* Brand */}
@@ -114,17 +115,17 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
                 style={{
                   fontSize: '15px', fontWeight: 400,
                   background: 'none', border: 'none',
-                  color: isActive(p.href) ? '#faf9f6' : '#868584',
+                  color: isActive(p.href) ? '#faf9f6' : '#aaa7a3',
                   cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
                   transition: 'color 0.15s ease',
                   paddingBottom: '2px',
-                  borderBottom: isActive(p.href) ? '1px solid #6d2735' : '1px solid transparent',
+                  borderBottom: isActive(p.href) ? '1px solid #ff5f7e' : '1px solid transparent',
                 }}
                 onMouseEnter={e => {
                   if (!isActive(p.href)) e.currentTarget.style.color = '#afaeac'
                 }}
                 onMouseLeave={e => {
-                  if (!isActive(p.href)) e.currentTarget.style.color = '#868584'
+                  if (!isActive(p.href)) e.currentTarget.style.color = '#aaa7a3'
                 }}
               >
                 {p.label}
@@ -140,12 +141,14 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
             style={{
               fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: 500,
               borderRadius: '50px', padding: '9px 22px', cursor: 'pointer',
-              background: '#6d2735', color: '#faf9f6', border: 'none',
+              background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none',
               display: 'inline-flex', alignItems: 'center', gap: '7px',
-              transition: 'background 0.18s ease',
+              transition: 'filter 0.18s ease, transform 0.18s ease',
+              boxShadow: 'rgba(255,95,126,0.24) 0 10px 28px',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
+            className="pop-button"
+            onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+            onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
           >
             <Mail size={14} />
             Get in touch
@@ -174,7 +177,7 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
         style={{
           display: 'none',
           position: 'fixed', inset: 0, zIndex: 150,
-          background: 'rgba(14,13,12,0.97)',
+          background: 'linear-gradient(135deg, rgba(28,24,21,0.98), rgba(48,24,32,0.97), rgba(15,41,38,0.97))',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           flexDirection: 'column',
@@ -205,11 +208,11 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
             style={{
               fontSize: '32px', fontWeight: 400,
               background: 'none', border: 'none',
-              color: isActive(p.href) ? '#faf9f6' : '#868584',
+              color: isActive(p.href) ? '#faf9f6' : '#aaa7a3',
               cursor: 'pointer', fontFamily: 'DM Sans, sans-serif',
               letterSpacing: '-0.5px',
               transition: 'color 0.15s ease',
-              borderBottom: isActive(p.href) ? '1px solid #6d2735' : '1px solid transparent',
+              borderBottom: isActive(p.href) ? '1px solid #ff5f7e' : '1px solid transparent',
               paddingBottom: '4px',
             }}
           >
@@ -223,12 +226,13 @@ export function Nav({ items }: { items?: CMSNavItem[] }) {
           style={{
             fontFamily: 'DM Sans, sans-serif', fontSize: '16px', fontWeight: 500,
             borderRadius: '50px', padding: '12px 28px', cursor: 'pointer',
-            background: '#6d2735', color: '#faf9f6', border: 'none',
+            background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none',
             display: 'inline-flex', alignItems: 'center', gap: '8px',
-            transition: 'background 0.18s ease',
+            transition: 'filter 0.18s ease, transform 0.18s ease',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-          onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
+          className="pop-button"
+          onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+          onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
         >
           <Mail size={16} />
           Get in touch

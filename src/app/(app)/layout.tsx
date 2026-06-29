@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
+import { AmbientInteractivity } from '@/components/AmbientInteractivity'
+import { SmoothScroll } from '@/components/SmoothScroll'
 import { getSiteSettings } from '@/lib/cms/site-settings'
 import { getNavigation } from '@/lib/cms/navigation'
 
@@ -34,6 +36,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         />
       </head>
       <body>
+        <SmoothScroll />
+        <AmbientInteractivity />
         <Nav items={navItems} />
         {children}
         <Footer settings={settings} navItems={navItems} />

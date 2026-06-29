@@ -8,19 +8,20 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { MapPin, Expand, X, ChevronLeft, ChevronRight } from 'lucide-react'
 import type { CMSPhoto } from '@/lib/cms/gallery'
+import type { CMSGallerySettings } from '@/lib/cms/gallery-settings'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 const FALLBACK_GRADIENTS = [
-  'linear-gradient(135deg, #1a1208 0%, #2d2010 40%, #3d2808 70%, #1a1208 100%)',
-  'linear-gradient(135deg, #0a110a 0%, #0d180d 50%, #0a110a 100%)',
-  'linear-gradient(135deg, #0e0d14 0%, #141018 50%, #0e0d14 100%)',
-  'linear-gradient(135deg, #100e0c 0%, #1a1510 50%, #100e0c 100%)',
-  'linear-gradient(135deg, #0e1018 0%, #12141e 50%, #0e1018 100%)',
-  'linear-gradient(135deg, #080e10 0%, #0d1618 50%, #080e10 100%)',
-  'linear-gradient(135deg, #081008 0%, #0c1a0c 40%, #101e10 70%, #081008 100%)',
-  'linear-gradient(135deg, #12100e 0%, #1c1810 50%, #12100e 100%)',
-  'linear-gradient(135deg, #180e0a 0%, #241408 50%, #180e0a 100%)',
+  'radial-gradient(circle at 25% 20%, rgba(255,179,92,0.35), transparent 30%), linear-gradient(135deg, #1a1208 0%, #2d2010 42%, #3d2808 72%, #1a1208 100%)',
+  'radial-gradient(circle at 70% 18%, rgba(79,209,197,0.26), transparent 34%), linear-gradient(135deg, #071411 0%, #0e211b 50%, #0a110a 100%)',
+  'radial-gradient(circle at 62% 22%, rgba(255,95,126,0.3), transparent 34%), linear-gradient(135deg, #0e0d14 0%, #181120 50%, #0e0d14 100%)',
+  'radial-gradient(circle at 32% 30%, rgba(255,95,126,0.24), transparent 32%), linear-gradient(135deg, #100e0c 0%, #241610 50%, #100e0c 100%)',
+  'radial-gradient(circle at 76% 28%, rgba(79,209,197,0.2), transparent 34%), linear-gradient(135deg, #0e1018 0%, #121a24 50%, #0e1018 100%)',
+  'radial-gradient(circle at 18% 22%, rgba(255,179,92,0.22), transparent 30%), linear-gradient(135deg, #080e10 0%, #0d1618 50%, #080e10 100%)',
+  'radial-gradient(circle at 62% 18%, rgba(79,209,197,0.2), transparent 32%), linear-gradient(135deg, #081008 0%, #0c1a0c 40%, #101e10 70%, #081008 100%)',
+  'radial-gradient(circle at 24% 24%, rgba(255,179,92,0.25), transparent 30%), linear-gradient(135deg, #12100e 0%, #1c1810 50%, #12100e 100%)',
+  'radial-gradient(circle at 70% 22%, rgba(255,95,126,0.28), transparent 32%), linear-gradient(135deg, #180e0a 0%, #241408 50%, #180e0a 100%)',
 ]
 
 const FALLBACK_PHOTOS = [
@@ -51,7 +52,7 @@ function GalleryPhoto({
 
   return (
     <div
-      className="gallery-photo"
+      className="gallery-photo interactive-card tilt-lift"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onClick={onOpen}
@@ -59,10 +60,10 @@ function GalleryPhoto({
         position: 'relative', borderRadius: '10px', overflow: 'hidden',
         cursor: 'pointer',
         aspectRatio: isFeature ? '2/1' : '4/3',
-        border: `1px solid ${hovered ? 'rgba(226,226,226,0.22)' : 'rgba(226,226,226,0.1)'}`,
+        border: `1px solid ${hovered ? 'rgba(255,255,255,0.28)' : 'rgba(226,226,226,0.1)'}`,
         transition: 'transform 0.3s ease, border-color 0.22s ease, box-shadow 0.3s ease',
-        transform: hovered ? 'scale(1.014)' : 'scale(1)',
-        boxShadow: hovered ? 'rgba(0,0,0,0.4) 0px 14px 36px' : 'rgba(0,0,0,0.15) 0px 4px 14px',
+        transform: hovered ? 'translateY(-6px) scale(1.018)' : 'scale(1)',
+        boxShadow: hovered ? 'rgba(0,0,0,0.44) 0px 18px 44px, rgba(255,95,126,0.13) 0 0 42px' : 'rgba(0,0,0,0.15) 0px 4px 14px',
         gridColumn: isFeature ? 'span 2' : 'span 1',
         willChange: 'transform',
         background: gradient,
@@ -79,13 +80,13 @@ function GalleryPhoto({
       <div style={{
         position: 'absolute', inset: 0,
         background: hovered
-          ? 'linear-gradient(to top, rgba(14,13,12,0.94) 0%, rgba(14,13,12,0.2) 58%, transparent 100%)'
-          : 'linear-gradient(to top, rgba(14,13,12,0.78) 0%, transparent 56%)',
+          ? 'linear-gradient(to top, rgba(18,15,13,0.78) 0%, rgba(18,15,13,0.14) 48%, rgba(255,95,126,0.12) 100%)'
+          : 'linear-gradient(to top, rgba(18,15,13,0.58) 0%, transparent 58%)',
         transition: 'background 0.28s ease',
       }} />
 
       {isFeature && (
-        <div style={{ position: 'absolute', top: '16px', left: '16px', fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', color: '#c96a78', background: 'rgba(109,39,53,0.28)', border: '1px solid rgba(138,63,78,0.42)', borderRadius: '4px', padding: '3px 8px', fontFamily: 'DM Sans, sans-serif' }}>
+        <div className="accent-chip" style={{ position: 'absolute', top: '16px', left: '16px', fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', color: '#ffb35c', borderRadius: '4px', padding: '3px 8px', fontFamily: 'DM Sans, sans-serif' }}>
           Featured
         </div>
       )}
@@ -99,8 +100,8 @@ function GalleryPhoto({
             {photo.title}
           </span>
           {photo.image?.alt && (
-            <span style={{ fontSize: '12px', color: '#868584', fontFamily: 'DM Sans, sans-serif', display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <MapPin size={10} style={{ color: '#868584', flexShrink: 0 }} />
+            <span style={{ fontSize: '12px', color: '#aaa7a3', fontFamily: 'DM Sans, sans-serif', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <MapPin size={10} style={{ color: '#aaa7a3', flexShrink: 0 }} />
               {photo.image.alt}
             </span>
           )}
@@ -116,13 +117,13 @@ function GalleryPhoto({
   )
 }
 
-export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?: CMSPhoto[]; heroImage?: string | null }) {
+export default function GalleryPage({ photos: cmsPhotos, settings }: { photos?: CMSPhoto[]; settings?: CMSGallerySettings }) {
   const [activeFilter, setActiveFilter] = useState('All')
   const [lightboxPhoto, setLightboxPhoto] = useState<CMSPhoto | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const { isMobile, px } = useBreakpoint()
   const filters = ['All', 'Landscape', 'Portrait', 'Urban', 'Nature']
-  const heroBg = heroImage || '/uploads/galleryhero.png'
+  const heroBg = settings?.heroImage || '/uploads/galleryhero.png'
 
   const photos = cmsPhotos && cmsPhotos.length > 0 ? cmsPhotos : FALLBACK_PHOTOS
   const filtered = activeFilter === 'All' ? photos : photos.filter(p => p.filter === activeFilter)
@@ -182,28 +183,28 @@ export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?:
       {/* Hero header */}
       <div style={{ position: 'relative', overflow: 'hidden', borderBottom: '1px solid rgba(226,226,226,0.08)', minHeight: '340px', display: 'flex', alignItems: 'flex-end' }}>
         <Image src={heroBg} alt="" fill priority style={{ objectFit: 'cover', objectPosition: 'center 40%' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(14,13,12,0.45) 0%, rgba(14,13,12,0.62) 50%, rgba(14,13,12,0.93) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'rgba(109,39,53,0.11)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(18,15,13,0.26) 0%, rgba(18,15,13,0.42) 50%, rgba(23,20,18,0.78) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, rgba(255,95,126,0.15), rgba(79,209,197,0.08), rgba(255,179,92,0.08))' }} />
         <div style={{ position: 'relative', zIndex: 1, padding: `80px ${px} 52px`, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', gap: '40px', width: '100%' }}>
           <div>
             <div className="gallery-eyebrow" style={{ fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase', color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '18px', display: 'flex', alignItems: 'center', gap: '12px' }}>
               <span style={{ width: '32px', height: '1px', background: '#c96a78', display: 'inline-block' }} />
-              Photography
+              {settings?.heroEyebrow || 'Photography'}
             </div>
             <h1 className="gallery-heading" style={{ fontSize: 'clamp(40px, 5vw, 64px)', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-2px', lineHeight: 1.0, marginBottom: '20px' }}>
-              Gallery
+              {settings?.heroTitle || 'Gallery'}
             </h1>
-            <p className="gallery-sub" style={{ fontSize: '17px', color: '#afaeac', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '480px' }}>
-              Landscapes, portraits and moments from the Netherlands and beyond.
+            <p className="gallery-sub" style={{ fontSize: '17px', color: '#d0cbc5', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '480px' }}>
+              {settings?.heroSubtitle || 'Landscapes, portraits and moments from the Netherlands and beyond.'}
             </p>
           </div>
           {!isMobile && (
-            <div className="gallery-eyebrow" style={{ flexShrink: 0, background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(226,226,226,0.14)', borderRadius: '12px', padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '160px' }}>
+            <div className="gallery-eyebrow" style={{ flexShrink: 0, background: 'rgba(255,255,255,0.105)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(226,226,226,0.2)', borderRadius: '12px', padding: '20px 28px', display: 'flex', flexDirection: 'column', gap: '6px', minWidth: '160px' }}>
               <span style={{ fontSize: '36px', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-1.5px', lineHeight: 1 }}>
                 {photos.length}
               </span>
               <span style={{ fontSize: '11px', color: '#afaeac', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>
-                Total photos
+                {settings?.statLabel || 'Total photos'}
               </span>
             </div>
           )}
@@ -217,14 +218,14 @@ export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?:
             key={f}
             className="filter-btn"
             onClick={() => setActiveFilter(f)}
-            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: activeFilter === f ? 500 : 400, borderRadius: '50px', padding: '7px 18px', cursor: 'pointer', background: activeFilter === f ? '#6d2735' : 'rgba(255,255,255,0.05)', color: activeFilter === f ? '#faf9f6' : '#868584', border: activeFilter === f ? 'none' : '1px solid rgba(226,226,226,0.12)', transition: 'all 0.2s ease' }}
+            style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '13px', fontWeight: activeFilter === f ? 500 : 400, borderRadius: '50px', padding: '7px 18px', cursor: 'pointer', background: activeFilter === f ? 'linear-gradient(135deg, #ff5f7e, #7c2941)' : 'rgba(255,255,255,0.075)', color: activeFilter === f ? '#faf9f6' : '#aaa7a3', border: activeFilter === f ? 'none' : '1px solid rgba(226,226,226,0.16)', transition: 'all 0.2s ease', boxShadow: activeFilter === f ? 'rgba(255,95,126,0.24) 0 10px 28px' : 'none' }}
             onMouseEnter={e => { if (activeFilter !== f) e.currentTarget.style.color = '#afaeac' }}
-            onMouseLeave={e => { if (activeFilter !== f) e.currentTarget.style.color = '#868584' }}
+            onMouseLeave={e => { if (activeFilter !== f) e.currentTarget.style.color = '#aaa7a3' }}
           >
             {f}
           </button>
         ))}
-        <span style={{ fontSize: '12px', color: '#454545', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif', marginLeft: 'auto' }}>
+        <span style={{ fontSize: '12px', color: '#7c7771', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif', marginLeft: 'auto' }}>
           {filtered.length} {filtered.length === 1 ? 'photo' : 'photos'}
         </span>
       </div>
@@ -249,7 +250,7 @@ export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?:
         <div
           style={{
             position: 'fixed', inset: 0,
-            background: 'rgba(6,5,5,0.94)',
+            background: 'rgba(18,15,13,0.88)',
             backdropFilter: 'blur(16px)',
             WebkitBackdropFilter: 'blur(16px)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -310,7 +311,7 @@ export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?:
                 borderRadius: '10px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <span style={{ fontSize: '13px', color: '#454545', fontFamily: 'DM Sans, sans-serif' }}>No image uploaded</span>
+                <span style={{ fontSize: '13px', color: '#7c7771', fontFamily: 'DM Sans, sans-serif' }}>No image uploaded</span>
               </div>
             )}
 
@@ -324,7 +325,7 @@ export default function GalleryPage({ photos: cmsPhotos, heroImage }: { photos?:
                   {lightboxPhoto.title}
                 </span>
               </div>
-              <span style={{ fontSize: '12px', color: '#454545', fontFamily: 'DM Sans, sans-serif', letterSpacing: '0.5px' }}>
+              <span style={{ fontSize: '12px', color: '#7c7771', fontFamily: 'DM Sans, sans-serif', letterSpacing: '0.5px' }}>
                 {lbIndex + 1} / {filtered.length}
               </span>
             </div>

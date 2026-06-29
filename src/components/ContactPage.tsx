@@ -36,13 +36,13 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
   }
 
   const inputStyle = (field: string): React.CSSProperties => ({
-    background: focused === field ? 'rgba(255,255,255,0.06)' : 'rgba(255,255,255,0.03)',
-    border: `1px solid ${focused === field ? 'rgba(138,63,78,0.52)' : 'rgba(226,226,226,0.14)'}`,
+    background: focused === field ? 'rgba(255,255,255,0.095)' : 'rgba(255,255,255,0.055)',
+    border: `1px solid ${focused === field ? 'rgba(255,95,126,0.56)' : 'rgba(226,226,226,0.14)'}`,
     borderRadius: '8px', padding: '13px 16px',
     fontFamily: 'DM Sans, sans-serif', fontSize: '15px', color: '#faf9f6',
     outline: 'none', width: '100%',
     transition: 'border-color 0.18s ease, background 0.18s ease',
-    boxShadow: focused === field ? '0 0 0 2.5px rgba(109,39,53,0.12)' : 'none',
+    boxShadow: focused === field ? '0 0 0 2.5px rgba(255,95,126,0.12), 0 0 28px rgba(79,209,197,0.08)' : 'none',
   })
 
   useGSAP(() => {
@@ -127,7 +127,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
     <div ref={containerRef} style={{ paddingTop: '68px', minHeight: '100vh' }}>
 
       {/* Header */}
-      <div style={{ padding: `80px ${px} 60px`, borderBottom: '1px solid rgba(226,226,226,0.08)' }}>
+      <div style={{ padding: `80px ${px} 60px`, borderBottom: '1px solid rgba(226,226,226,0.08)', background: 'linear-gradient(135deg, rgba(255,95,126,0.08), rgba(79,209,197,0.045), transparent 58%)' }}>
         <div className="contact-eyebrow" style={{
           fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase',
           color: '#c96a78', fontFamily: 'DM Sans, sans-serif', marginBottom: '18px',
@@ -144,7 +144,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
           Get in touch
         </h1>
         <p className="contact-sub" style={{
-          fontSize: '17px', color: '#868584', lineHeight: 1.65,
+          fontSize: '17px', color: '#aaa7a3', lineHeight: 1.65,
           fontFamily: 'DM Sans, sans-serif', maxWidth: '440px',
         }}>
           Open to photography commissions, development work, and collaborations.
@@ -170,24 +170,24 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
               Contact info
             </div>
             {infoItems.map(({ icon: Icon, title, val }, i) => (
-              <div key={i} className="info-item" style={{
+              <div key={i} className="info-item interactive-card" style={{
                 display: 'flex', alignItems: 'flex-start', gap: '14px',
                 padding: '18px 20px',
-                background: 'rgba(255,255,255,0.025)',
+                background: 'rgba(255,255,255,0.06)',
                 border: '1px solid rgba(226,226,226,0.1)',
                 borderRadius: '10px',
               }}>
                 <div style={{
                   width: '36px', height: '36px', borderRadius: '8px',
-                  background: 'rgba(109,39,53,0.15)',
-                  border: '1px solid rgba(138,63,78,0.25)',
+                  background: 'linear-gradient(135deg, rgba(255,95,126,0.22), rgba(79,209,197,0.1))',
+                  border: '1px solid rgba(255,255,255,0.16)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   flexShrink: 0,
                 }}>
-                  <Icon size={16} style={{ color: '#c96a78' }} strokeWidth={1.5} />
+                  <Icon size={16} style={{ color: '#ffb35c' }} strokeWidth={1.5} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                  <span style={{ fontSize: '13px', color: '#868584', letterSpacing: '0.5px', fontFamily: 'DM Sans, sans-serif' }}>
+                  <span style={{ fontSize: '13px', color: '#aaa7a3', letterSpacing: '0.5px', fontFamily: 'DM Sans, sans-serif' }}>
                     {title}
                   </span>
                   <span style={{ fontSize: '15px', color: '#faf9f6', fontFamily: 'DM Sans, sans-serif' }}>
@@ -214,21 +214,21 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
                   className="social-btn"
                   style={{
                     display: 'flex', alignItems: 'center', gap: '8px',
-                    background: 'rgba(255,255,255,0.04)',
+                    background: 'rgba(255,255,255,0.065)',
                     border: '1px solid rgba(226,226,226,0.12)',
                     borderRadius: '8px', padding: '10px 16px',
-                    fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: '#868584',
+                    fontFamily: 'DM Sans, sans-serif', fontSize: '13px', color: '#aaa7a3',
                     cursor: 'pointer', textDecoration: 'none',
                     transition: 'background 0.18s ease, color 0.18s ease, border-color 0.18s ease',
                   }}
                   onMouseEnter={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.105)'
                     e.currentTarget.style.color = '#faf9f6'
                     e.currentTarget.style.borderColor = 'rgba(226,226,226,0.24)'
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
-                    e.currentTarget.style.color = '#868584'
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.065)'
+                    e.currentTarget.style.color = '#aaa7a3'
                     e.currentTarget.style.borderColor = 'rgba(226,226,226,0.12)'
                   }}
                 >
@@ -243,8 +243,8 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
           <div className="response-box" style={{
             padding: '24px',
             borderRadius: '12px',
-            background: 'rgba(109,39,53,0.08)',
-            border: '1px solid rgba(138,63,78,0.2)',
+            background: 'linear-gradient(135deg, rgba(255,95,126,0.1), rgba(79,209,197,0.055))',
+            border: '1px solid rgba(255,255,255,0.14)',
           }}>
             <div style={{
               fontSize: '11px', letterSpacing: '2.4px', textTransform: 'uppercase',
@@ -268,29 +268,30 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
             }}>
               <div style={{
                 width: '64px', height: '64px', borderRadius: '50%',
-                background: 'rgba(109,39,53,0.2)',
-                border: '1px solid rgba(138,63,78,0.4)',
+                background: 'linear-gradient(135deg, rgba(255,95,126,0.22), rgba(79,209,197,0.12))',
+                border: '1px solid rgba(255,255,255,0.18)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                <Check size={28} style={{ color: '#c96a78' }} strokeWidth={1.5} />
+                <Check size={28} style={{ color: '#ffb35c' }} strokeWidth={1.5} />
               </div>
               <div style={{ fontSize: '28px', fontWeight: 400, color: '#faf9f6', fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.5px' }}>
                 Message sent!
               </div>
-              <p style={{ fontSize: '16px', color: '#868584', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '360px' }}>
+              <p style={{ fontSize: '16px', color: '#aaa7a3', lineHeight: 1.65, fontFamily: 'DM Sans, sans-serif', maxWidth: '360px' }}>
                 Thanks for reaching out. I&apos;ll get back to you as soon as possible.
               </p>
               <button
                 onClick={() => setSubmitted(false)}
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  background: '#353534', color: '#afaeac', border: 'none',
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.13), rgba(79,209,197,0.12))', color: '#afaeac', border: '1px solid rgba(255,255,255,0.14)',
                   borderRadius: '50px', padding: '14px 32px',
                   fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500,
                   cursor: 'pointer', transition: 'background 0.18s ease, color 0.18s ease',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#3f3e3d'; e.currentTarget.style.color = '#faf9f6' }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#353534'; e.currentTarget.style.color = '#afaeac' }}
+                className="pop-button"
+                onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.color = '#faf9f6' }}
+                onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.color = '#afaeac' }}
               >
                 Send another message
               </button>
@@ -301,7 +302,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
               <div className="form-field" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div>
                   <label style={{
-                    fontSize: '11px', color: '#868584', letterSpacing: '1.4px',
+                    fontSize: '11px', color: '#aaa7a3', letterSpacing: '1.4px',
                     textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif',
                     marginBottom: '8px', display: 'block',
                   }}>Full name</label>
@@ -317,7 +318,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
                 </div>
                 <div>
                   <label style={{
-                    fontSize: '11px', color: '#868584', letterSpacing: '1.4px',
+                    fontSize: '11px', color: '#aaa7a3', letterSpacing: '1.4px',
                     textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif',
                     marginBottom: '8px', display: 'block',
                   }}>Email address</label>
@@ -337,7 +338,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
               {/* Subject */}
               <div className="form-field">
                 <label style={{
-                  fontSize: '11px', color: '#868584', letterSpacing: '1.4px',
+                  fontSize: '11px', color: '#aaa7a3', letterSpacing: '1.4px',
                   textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif',
                   marginBottom: '8px', display: 'block',
                 }}>Subject</label>
@@ -354,7 +355,7 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
               {/* Message */}
               <div className="form-field">
                 <label style={{
-                  fontSize: '11px', color: '#868584', letterSpacing: '1.4px',
+                  fontSize: '11px', color: '#aaa7a3', letterSpacing: '1.4px',
                   textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif',
                   marginBottom: '8px', display: 'block',
                 }}>Message</label>
@@ -375,14 +376,15 @@ export default function ContactPage({ settings = defaultSettings }: { settings?:
                   type="submit"
                   style={{
                     display: 'inline-flex', alignItems: 'center', gap: '10px',
-                    background: '#6d2735', color: '#faf9f6', border: 'none',
+                    background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none',
                     borderRadius: '50px', padding: '14px 32px',
                     fontFamily: 'DM Sans, sans-serif', fontSize: '15px', fontWeight: 500,
-                    cursor: 'pointer', transition: 'background 0.18s ease',
-                    boxShadow: 'rgba(109,39,53,0.32) 0px 8px 28px',
+                    cursor: 'pointer', transition: 'filter 0.18s ease, transform 0.18s ease',
+                    boxShadow: 'rgba(255,95,126,0.3) 0px 10px 30px',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
+                  className="pop-button"
+                  onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
                 >
                   <Send size={15} strokeWidth={1.5} />
                   Send message

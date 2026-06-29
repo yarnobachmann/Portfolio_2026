@@ -34,9 +34,9 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
         <button
           className="detail-back"
           onClick={() => router.push('/projects')}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: '#868584', cursor: 'pointer', fontFamily: 'DM Sans, sans-serif', fontSize: '13px', marginBottom: '40px', transition: 'color 0.15s ease' }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: 'none', border: 'none', color: '#aaa7a3', cursor: 'pointer', fontFamily: 'DM Sans, sans-serif', fontSize: '13px', marginBottom: '40px', transition: 'color 0.15s ease' }}
           onMouseEnter={e => { e.currentTarget.style.color = '#faf9f6' }}
-          onMouseLeave={e => { e.currentTarget.style.color = '#868584' }}
+          onMouseLeave={e => { e.currentTarget.style.color = '#aaa7a3' }}
         >
           <ArrowLeft size={14} strokeWidth={1.5} />
           Back to projects
@@ -44,7 +44,7 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
 
         {/* Tag */}
         <div className="detail-tag" style={{ marginBottom: '18px' }}>
-          <span style={{ fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', background: project.accent ? 'rgba(109,39,53,0.22)' : 'rgba(255,255,255,0.07)', color: project.accent ? '#c96a78' : '#868584', border: `1px solid ${project.accent ? 'rgba(138,63,78,0.42)' : 'rgba(226,226,226,0.14)'}`, borderRadius: '4px', padding: '4px 10px', fontFamily: 'DM Sans, sans-serif' }}>
+          <span style={{ fontSize: '10px', letterSpacing: '1.8px', textTransform: 'uppercase', background: project.accent ? 'rgba(255,95,126,0.2)' : 'rgba(255,255,255,0.085)', color: project.accent ? '#ffb35c' : '#aaa7a3', border: `1px solid ${project.accent ? 'rgba(255,95,126,0.42)' : 'rgba(226,226,226,0.18)'}`, borderRadius: '4px', padding: '4px 10px', fontFamily: 'DM Sans, sans-serif' }}>
             {project.tag}
           </span>
         </div>
@@ -57,11 +57,11 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
         {/* Meta */}
         <div style={{ display: 'flex', gap: isMobile ? '16px' : '32px', marginBottom: '28px' }}>
           <div className="detail-meta" style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-            <span style={{ fontSize: '11px', color: '#454545', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>Year</span>
+            <span style={{ fontSize: '11px', color: '#7c7771', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>Year</span>
             <span style={{ fontSize: '15px', color: '#faf9f6', fontFamily: 'DM Sans, sans-serif' }}>{project.year}</span>
           </div>
           <div className="detail-meta" style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
-            <span style={{ fontSize: '11px', color: '#454545', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>Category</span>
+            <span style={{ fontSize: '11px', color: '#7c7771', letterSpacing: '1.4px', textTransform: 'uppercase', fontFamily: 'DM Sans, sans-serif' }}>Category</span>
             <span style={{ fontSize: '15px', color: '#faf9f6', fontFamily: 'DM Sans, sans-serif' }}>{project.tag}</span>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
         {project.tech?.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '32px' }}>
             {project.tech.map((t, i) => (
-              <span key={i} className="detail-tech" style={{ fontSize: '12px', color: '#868584', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(226,226,226,0.1)', borderRadius: '4px', padding: '4px 10px', fontFamily: 'Geist Mono, monospace', letterSpacing: '-0.2px' }}>
+              <span key={i} className="detail-tech" style={{ fontSize: '12px', color: '#aaa7a3', background: 'rgba(255,255,255,0.075)', border: '1px solid rgba(226,226,226,0.16)', borderRadius: '4px', padding: '4px 10px', fontFamily: 'Geist Mono, monospace', letterSpacing: '-0.2px' }}>
                 {t.label}
               </span>
             ))}
@@ -81,18 +81,18 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
         {(project.url || project.github) && (
           <div className="detail-actions" style={{ display: 'flex', gap: '10px', marginBottom: '48px' }}>
             {project.url && (
-              <a href={project.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', background: '#6d2735', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '11px 24px', fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: 500, textDecoration: 'none', transition: 'background 0.18s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.background = '#7a2f3f' }}
-                onMouseLeave={e => { e.currentTarget.style.background = '#6d2735' }}
+              <a href={project.url} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', background: 'linear-gradient(135deg, #ff5f7e, #7c2941)', color: '#faf9f6', border: 'none', borderRadius: '50px', padding: '11px 24px', fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: 500, textDecoration: 'none', transition: 'filter 0.18s ease, transform 0.18s ease', boxShadow: 'rgba(255,95,126,0.24) 0 10px 28px' }}
+                onMouseEnter={e => { e.currentTarget.style.filter = 'brightness(1.08)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                onMouseLeave={e => { e.currentTarget.style.filter = ''; e.currentTarget.style.transform = '' }}
               >
                 View live
                 <ArrowUpRight size={14} strokeWidth={1.5} />
               </a>
             )}
             {project.github && (
-              <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', background: 'rgba(255,255,255,0.06)', color: '#afaeac', border: '1px solid rgba(226,226,226,0.14)', borderRadius: '50px', padding: '11px 24px', fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: 500, textDecoration: 'none', transition: 'background 0.18s ease, color 0.18s ease' }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.1)'; e.currentTarget.style.color = '#faf9f6' }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = '#afaeac' }}
+              <a href={project.github} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: '7px', background: 'rgba(255,255,255,0.085)', color: '#c8c2bb', border: '1px solid rgba(226,226,226,0.18)', borderRadius: '50px', padding: '11px 24px', fontFamily: 'DM Sans, sans-serif', fontSize: '14px', fontWeight: 500, textDecoration: 'none', transition: 'background 0.18s ease, color 0.18s ease' }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.13)'; e.currentTarget.style.color = '#faf9f6' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.085)'; e.currentTarget.style.color = '#c8c2bb' }}
               >
                 <Github size={14} strokeWidth={1.5} />
                 View code
@@ -102,8 +102,8 @@ export default function ProjectDetail({ project }: { project: CMSProject }) {
         )}
 
         {/* Description / content */}
-        <div className="detail-content" style={{ borderTop: '1px solid rgba(226,226,226,0.08)', paddingTop: '40px' }}>
-          <p style={{ fontSize: '17px', color: '#afaeac', lineHeight: 1.75, fontFamily: 'DM Sans, sans-serif' }}>
+        <div className="detail-content" style={{ borderTop: '1px solid rgba(226,226,226,0.12)', paddingTop: '40px' }}>
+          <p style={{ fontSize: '17px', color: '#c8c2bb', lineHeight: 1.75, fontFamily: 'DM Sans, sans-serif' }}>
             {project.desc}
           </p>
         </div>

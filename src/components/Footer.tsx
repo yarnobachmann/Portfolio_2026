@@ -61,13 +61,13 @@ export function Footer({
   ]
 
   const linkStyle: React.CSSProperties = {
-    fontSize: '14px', color: '#868584', cursor: 'pointer',
+    fontSize: '14px', color: '#aaa7a3', cursor: 'pointer',
     fontFamily: 'DM Sans, sans-serif', textDecoration: 'none',
     transition: 'color 0.15s ease', display: 'block',
   }
 
   return (
-    <footer ref={footerRef} style={{ borderTop: '1px solid rgba(226,226,226,0.08)' }}>
+    <footer ref={footerRef} style={{ borderTop: '1px solid rgba(226,226,226,0.12)', background: 'rgba(255,255,255,0.025)' }}>
       <div style={{
         padding: `64px ${px} 48px`,
         display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1.5fr 1fr 1fr', gap: isMobile ? '40px' : '64px',
@@ -80,7 +80,7 @@ export function Footer({
               {settings.siteName}
             </span>
           </div>
-          <div style={{ fontSize: '14px', color: '#454545', fontFamily: 'DM Sans, sans-serif', lineHeight: 1.6, maxWidth: '280px' }}>
+          <div style={{ fontSize: '14px', color: '#8d8780', fontFamily: 'DM Sans, sans-serif', lineHeight: 1.6, maxWidth: '280px' }}>
             Photographer &amp; developer student. Capturing light and building things that matter.
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
@@ -90,21 +90,21 @@ export function Footer({
                 href={href}
                 style={{
                   width: '36px', height: '36px', borderRadius: '8px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(226,226,226,0.1)',
+                  background: 'rgba(255,255,255,0.065)',
+                  border: '1px solid rgba(226,226,226,0.16)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   cursor: 'pointer', transition: 'background 0.18s ease, border-color 0.18s ease',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.08)'
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.12)'
                   e.currentTarget.style.borderColor = 'rgba(226,226,226,0.22)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
-                  e.currentTarget.style.borderColor = 'rgba(226,226,226,0.1)'
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.065)'
+                  e.currentTarget.style.borderColor = 'rgba(226,226,226,0.16)'
                 }}
               >
-                <Icon size={15} style={{ color: '#868584' }} />
+                <Icon size={15} style={{ color: '#aaa7a3' }} />
               </a>
             ))}
           </div>
@@ -124,7 +124,7 @@ export function Footer({
                 style={linkStyle}
                 onClick={() => router.push(p.href)}
                 onMouseEnter={e => { e.currentTarget.style.color = '#faf9f6' }}
-                onMouseLeave={e => { e.currentTarget.style.color = '#868584' }}
+                onMouseLeave={e => { e.currentTarget.style.color = '#aaa7a3' }}
               >
                 {p.label}
               </a>
@@ -157,20 +157,20 @@ export function Footer({
       </div>
 
       <div style={{
-        borderTop: '1px solid rgba(226,226,226,0.06)',
+        borderTop: '1px solid rgba(226,226,226,0.1)',
         padding: `24px ${px}`,
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
-        <span style={{ fontSize: '12px', color: '#353534', fontFamily: 'DM Sans, sans-serif' }}>
+        <span style={{ fontSize: '12px', color: '#7c7771', fontFamily: 'DM Sans, sans-serif' }}>
           {settings.copyright}. All rights reserved.
         </span>
         <div style={{ display: 'flex', gap: '24px' }}>
           {['Privacy', 'Terms'].map(label => (
             <a
               key={label}
-              style={{ fontSize: '12px', color: '#353534', fontFamily: 'DM Sans, sans-serif', cursor: 'pointer', transition: 'color 0.15s ease' }}
-              onMouseEnter={e => { e.currentTarget.style.color = '#868584' }}
-              onMouseLeave={e => { e.currentTarget.style.color = '#353534' }}
+              style={{ fontSize: '12px', color: '#7c7771', fontFamily: 'DM Sans, sans-serif', cursor: 'pointer', transition: 'color 0.15s ease' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#aaa7a3' }}
+              onMouseLeave={e => { e.currentTarget.style.color = '#7c7771' }}
             >
               {label}
             </a>
