@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build --webpack",
-    "start": "next start",
+    "start": "node scripts/ensure-globals.cjs && next start",
+    "ensure:globals": "node scripts/ensure-globals.cjs",
     "seed": "node seed-runner.cjs",
     "generate:importmap": "node generate-importmap.cjs",
     "payload": "payload"

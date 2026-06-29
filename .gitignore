@@ -12,6 +12,7 @@ out/
 
 # Payload CMS — generated types file
 payload-types.ts
+*.tsbuildinfo
 
 # OS / editor
 .DS_Store
