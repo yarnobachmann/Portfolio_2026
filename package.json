@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "node scripts/build.cjs",
-    "start": "node scripts/ensure-globals.cjs && next start",
+    "start": "node scripts/start.cjs",
     "ensure:globals": "node scripts/ensure-globals.cjs",
     "seed": "node seed-runner.cjs",
     "generate:importmap": "node generate-importmap.cjs",
