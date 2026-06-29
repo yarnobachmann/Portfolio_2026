@@ -1,6 +1,6 @@
 const { spawn } = require('child_process')
 
-const bootstrap = spawn(process.execPath, ['scripts/ensure-globals.cjs'], {
+const bootstrap = spawn(process.execPath, ['scripts/ensure-schema.cjs'], {
   env: process.env,
   shell: false,
   stdio: 'inherit',
@@ -8,7 +8,7 @@ const bootstrap = spawn(process.execPath, ['scripts/ensure-globals.cjs'], {
 
 bootstrap.on('exit', (code) => {
   if (code && code !== 0) {
-    console.warn(`Global bootstrap exited with code ${code}. Continuing to run the web server.`)
+    console.warn(`Schema bootstrap exited with code ${code}. Continuing to run the web server.`)
   }
 })
 

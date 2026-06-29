@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "node scripts/build.cjs",
     "start": "node scripts/start.cjs",
-    "ensure:globals": "node scripts/ensure-globals.cjs",
+    "ensure:schema": "node scripts/ensure-schema.cjs",
     "seed": "node seed-runner.cjs",
     "generate:importmap": "node generate-importmap.cjs",
     "payload": "payload"
@@ -25,6 +25,7 @@
     "lucide-react": "^0.414.0",
     "next": "^16.2.4",
     "payload": "^3.84.1",
+    "pg": "^8.20.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "sharp": "^0.34.5",
